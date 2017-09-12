@@ -38,7 +38,7 @@ def Tokenizing(text):
 
 def RemoveStopWords(text):
 	stop_words = set(stopwords.words('english'))
-	filtered_sentence = [word for sent in text for word in sent if not word in stop_words and not word in Extra_characters]
+	filtered_sentence = [word for sent in text for word in sent if not word in stop_words and not word in Extra_characters and not word.isdigit()]
 	return filtered_sentence
 
 def Stemming(_list_):
@@ -67,9 +67,10 @@ def ChangeKey(text_withoutStopWords, stemmed_text):
 	i=0
 	text_withoutStopWords = sorted(text_withoutStopWords)
 	stemmed_text = sorted(stemmed_text)
-	import pdb; pdb.set_trace()
+	# import pdb; pdb.set_trace()
 	for i in range(len(stemmed_text)):
-		_dict_[stemmed_text[i]]=_dict_.pop(text_withoutStopWords[i])
+		if text_withoutStopWords[i] in _dict_ and stemmed_text[i] not in _dict_:
+			_dict_[stemmed_text[i]]=_dict_.pop(text_withoutStopWords[i])
 		i+=1
 
 def Process():
